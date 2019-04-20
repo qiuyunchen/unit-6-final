@@ -1,7 +1,11 @@
 .show-card {
-    width: 50%;
     text-align: center;
+    margin-bottom: 50px;
+    width: 45%;
 }
 .show-img {
     height: 300px;
+}
+.show-link {
+    color: black;
 }
