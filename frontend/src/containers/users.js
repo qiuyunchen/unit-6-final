@@ -34,7 +34,6 @@ export default class Users extends React.Component{
         const {users, userLoggedIn} = this.state;
         let displayLoggedInUser = null;
         if (userLoggedIn){
-            console.log(userLoggedIn);
             displayLoggedInUser = <>
                 <h1>Welcome, {userLoggedIn.username}!</h1>
                 <h2>Your user id is: {userLoggedIn.id}</h2>
@@ -46,6 +45,7 @@ export default class Users extends React.Component{
             </div>
         }
 
+        
         return <div>
             <div className='logged-in-user-box'>
                 {displayLoggedInUser}

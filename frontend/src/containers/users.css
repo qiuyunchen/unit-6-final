@@ -3,10 +3,7 @@
 }
 .users-ol {
     font-size: 20pt;
-}
-.user-name {
-    text-decoration: none;
-    color: blueviolet;
+    color: rgb(7, 131, 44);
 }
 .user-name:hover {
     font-weight: 600;
