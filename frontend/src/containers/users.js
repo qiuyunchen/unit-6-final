@@ -45,7 +45,7 @@ export default class Users extends React.Component{
             </div>
         }
 
-        
+
         return <div>
             <div className='logged-in-user-box'>
                 {displayLoggedInUser}
@@ -56,9 +56,9 @@ export default class Users extends React.Component{
                 <ol className='users-ol'>
                     {users.map( (e,i) =>{
                         return <>
-                            <li userid={e.id} onClick={this.signInUser} className='user-name'>
+                            <li userid={e.id} onClick={this.signInUser} className='user-name' key={i}>
                                 {e.username} &nbsp;&nbsp;
-                                <Link to={'/user/' + e.id} key={i} title={`Go to ${e.username}'s profile`} className='no-deco arrow'> 
+                                <Link to={'/user/' + e.id} title={`Go to ${e.username}'s profile`} className='no-deco arrow'> 
                                     &#9654;
                                 </Link>
                             </li>

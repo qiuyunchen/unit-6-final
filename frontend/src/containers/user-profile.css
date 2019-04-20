@@ -1,0 +1,4 @@
+.shows-watched-by-user {
+    display: flex;
+    flex-wrap: wrap;
+}
