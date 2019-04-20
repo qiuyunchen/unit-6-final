@@ -3,7 +3,33 @@ const ShowsService = {};
 module.exports = ShowsService;
 
 ShowsService.getAllShows = () =>{
-    return db.any('SELECT * FROM shows;');
+    const sql = `
+        SELECT shows.*, users.username
+        FROM shows
+        JOIN users
+        ON shows.user_id = users.id;
+    `
+    return db.any(sql);
+}
+
+ShowsService.getAllUniqueShowTitles = () =>{
+    const sql = `
+        SELECT title  
+        FROM shows
+        GROUP BY title;
+    `
+    return db.any(sql);
+}
+
+ShowsService.getShowsByTitle = (title) =>{
+    const sql = `
+        SELECT shows.*, users.username
+        FROM shows
+        JOIN users
+        ON shows.user_id = users.id
+        WHERE shows.title = $[title];
+    `
+    return db.any(sql, {title});
 }
 
 ShowsService.getShowsByGenreId = (id) =>{
