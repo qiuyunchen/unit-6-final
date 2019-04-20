@@ -1,5 +1,8 @@
 import React from 'react';
+import './home.css';
 
 export default (props) =>{
-    return <h1>home</h1>;
+    return <div className='home-pg-display'>
+        <h1>Welcome to the TV Show Watchlist App!</h1>
+    </div>;
 }
