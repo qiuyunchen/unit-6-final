@@ -4,26 +4,35 @@ import './header.css';
 
 export default (props) =>{
     return <nav className='header'>
-        <div>
+        <div className='app-name'>
             TV Show Watchlist
         </div>
         <ul className='nav-links'>
-            <Link to='/'>
+            <Link to='/' className='nav-link'>
                 <li>
                     Home
                 </li>
             </Link>
-            <Link to='/users'>
+                <li>
+                    -
+                </li>
+            <Link to='/users' className='nav-link'>
                 <li>
                     Users
                 </li>
             </Link>
-            <Link to='/shows'>
+                <li>
+                    -
+                </li>
+            <Link to='/shows' className='nav-link'>
                 <li>
                     TV Shows
                 </li>
             </Link>
-            <Link to='/user/post'>
+                <li>
+                    -
+                </li>
+            <Link to='/user/post' className='nav-link'>
                 <li>
                     Post
                 </li>
