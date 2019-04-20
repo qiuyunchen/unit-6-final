@@ -2,14 +2,30 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
 
+// Service Module Requirements
+const UserService = require('./services/user');
+
+
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
+// test connection
 app.get('/', (req, res) =>{
     res.json({success: 'connected', url: 'localhost:5555/'});
+})
+
+// User routes
+app.get('/users/all', (req,res) =>{
+    UserService.getAllUsers()
+        .then(usersArr =>{
+            res.json({users: usersArr});
+        })
+        .catch( err =>{
+            res.status(404).json({Error: err});
+        })
 })
 
 app.listen(5555, ()=>{
