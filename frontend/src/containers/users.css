@@ -1,0 +1,20 @@
+.logged-in-user-box {
+    text-align: center;
+}
+.users-ol {
+    font-size: 20pt;
+    color: rgb(7, 131, 44);
+}
+.user-name:hover {
+    font-weight: 600;
+}
+.no-deco {
+    text-decoration: none;
+}
+.arrow {
+    color: black;
+    font-size: 18px;
+}
+.not-signed-in-text {
+    color: grey;
+}
