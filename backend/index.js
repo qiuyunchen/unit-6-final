@@ -4,7 +4,7 @@ const express = require('express');
 
 // Service Module Requirements
 const UserService = require('./services/user');
-
+const ShowsService = require('./services/shows');
 
 const app = express();
 
@@ -22,6 +22,17 @@ app.get('/users/all', (req,res) =>{
     UserService.getAllUsers()
         .then(usersArr =>{
             res.json({users: usersArr});
+        })
+        .catch( err =>{
+            res.status(404).json({Error: err});
+        })
+})
+
+app.get('/shows/user/:id', (req, res) =>{
+    const {id} = req.params;
+    ShowsService.getShowsByUserId( parseInt(id) )
+        .then(showsArr =>{
+            res.json({shows: showsArr});
         })
         .catch( err =>{
             res.status(404).json({Error: err});

@@ -16,7 +16,11 @@ ShowsService.getShowsByGenreId = (id) =>{
 
 ShowsService.getShowsByUserId = (id) =>{
     const sql = `
-        SELECT * FROM shows
+        SELECT 
+            shows.*, genres.genre_name
+        FROM shows
+        JOIN genres
+        ON shows.genre_id = genres.id
         WHERE user_id = $[id];
     `
     return db.any(sql, {id});
