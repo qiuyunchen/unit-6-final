@@ -5,6 +5,7 @@ const express = require('express');
 // Service Module Requirements
 const UserService = require('./services/user');
 const ShowsService = require('./services/shows');
+const GenreService = require('./services/genre');
 
 const app = express();
 
@@ -57,6 +58,17 @@ app.get('/shows/title/:title', (req, res) =>{
     ShowsService.getShowsByTitle(title)
         .then(watchersArr =>{
             res.json({watchers: watchersArr});
+        })
+        .catch( err =>{
+            res.status(404).json({Error: err});
+        })
+})
+
+// Get all genres Route
+app.get('/genres/all', (req, res) =>{
+    GenreService.getAllGenres()
+        .then(genresArr =>{
+            res.json({genres: genresArr});
         })
         .catch( err =>{
             res.status(404).json({Error: err});
