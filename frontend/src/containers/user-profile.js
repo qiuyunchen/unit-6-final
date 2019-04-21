@@ -23,7 +23,7 @@ export default class UserProfile extends React.Component {
         const {shows} = this.state;
 
         return <>
-            <h1>Shows Watched By Logged In User</h1>
+            <h1>User Profile: shows being watched</h1>
             <div className='shows-watched-by-user'>
                 {shows.map( (e,i) =>{
                     return <ShowCard {...e} key={i}/>

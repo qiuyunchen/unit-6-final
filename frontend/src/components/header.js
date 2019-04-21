@@ -34,7 +34,7 @@ export default (props) =>{
                 </li>
             <Link to='/user/post' className='nav-link'>
                 <li>
-                    Post
+                    Create
                 </li>
             </Link>
         </ul>
