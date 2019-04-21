@@ -75,6 +75,19 @@ app.get('/genres/all', (req, res) =>{
         })
 })
 
+// Post new show route
+app.post('/shows', (req, res) =>{
+    const {title, img_url, user_id, genre_id} = req.body;
+
+    ShowsService.createNewShow({title, img_url, user_id: parseInt(user_id), genre_id: parseInt(genre_id)})
+        .then(newShow =>{
+            res.json({showCreated: newShow});
+        })
+        .catch( err =>{
+            res.status(404).json({Error: err});
+        })
+})
+
 app.listen(5555, ()=>{
     console.log('Server listening to port 5555');
 })
