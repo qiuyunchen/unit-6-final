@@ -13,6 +13,10 @@ import Users from './containers/users';
 import './App.css';
 
 export default class App extends Component {
+  state = {
+    userid: null,
+  }
+
   render() {
     return (
       <HashRouter>
