@@ -88,6 +88,18 @@ app.post('/shows', (req, res) =>{
         })
 })
 
+// Get genre by id route
+app.get('/genre/:id', (req, res) =>{
+    const {id} = req.params;
+    GenreService.getGenreById(id)
+        .then(genre =>{
+            res.json({genre});
+        })
+        .catch( err =>{
+            res.status(404).json({Error: err});
+        })
+})
+
 app.listen(5555, ()=>{
     console.log('Server listening to port 5555');
 })
