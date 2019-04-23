@@ -6,6 +6,7 @@ const express = require('express');
 const UserService = require('./services/user');
 const ShowsService = require('./services/shows');
 const GenreService = require('./services/genre');
+const CommentsService = require('./services/comments');
 
 const app = express();
 
@@ -118,6 +119,18 @@ app.get('/shows/:id', (req, res) =>{
     ShowsService.getShowById(id)
         .then(show =>{
             res.json({show});
+        })
+        .catch( err =>{
+            res.status(404).json({Error: err});
+        })
+})
+
+// Get comments by show id route
+app.get('/comments/show/:id', (req, res) =>{
+    const {id} = req.params;
+    CommentsService.getCommentsByShowId(id)
+        .then(comments =>{
+            res.json({comments});
         })
         .catch( err =>{
             res.status(404).json({Error: err});
