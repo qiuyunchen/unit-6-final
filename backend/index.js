@@ -29,6 +29,18 @@ app.get('/users/all', (req,res) =>{
         })
 })
 
+// Get user by id
+app.get('/users/:id', (req, res) =>{
+    const {id} = req.params;
+    UserService.getUserById(id)
+        .then(user =>{
+            res.json({user});
+        })
+        .catch( err =>{
+            res.status(404).json({Error: err});
+        })
+})
+
 // Shows For One User Route
 app.get('/shows/user/:id', (req, res) =>{
     const {id} = req.params;
