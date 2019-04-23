@@ -61,11 +61,13 @@ export default class ShowProfile extends React.Component {
                 show_id: id,
             })
                 .then(success =>{
-                    const {show_id} = success.data.commentCreated;
-                    return Axios.get(`http://localhost:5555/comments/show/${show_id}`)
+                    const {id} = success.data.commentCreated;
+                    return Axios.get(`http://localhost:5555/comments/${id}`)
                 })
                 .then( res =>{
-                    const {comments} = res.data;
+                    const {comment} = res.data;
+                    const comments = [...this.state.comments];
+                    comments.unshift(comment);
                     this.setState({comments, comment: ''});
                 })
                 .catch(err =>{
