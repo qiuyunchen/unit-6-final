@@ -2,6 +2,17 @@ const db = require('./db-connect');
 const CommentsService = {};
 module.exports = CommentsService;
 
+CommentsService.getCommentById = (id) =>{
+    const sql = `
+        SELECT comments.*, users.username
+        FROM comments
+        JOIN users
+        ON comments.user_id = users.id
+        WHERE id = $[id];
+    `
+    return db.one(sql, {id});
+}
+
 CommentsService.getCommentsByShowId = (id) =>{
     const sql =`
         SELECT comments.*, users.username
