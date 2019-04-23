@@ -6,6 +6,7 @@ import './user-profile.css';
 export default class UserProfile extends React.Component {
     state = {
         shows: [],
+        username: '',
     }
 
     componentDidMount (){
@@ -17,13 +18,22 @@ export default class UserProfile extends React.Component {
             .catch( err =>{
                 console.log('get shows by user id ERROR!!!', err);
             })
+
+        Axios.get(`http://localhost:5555/users/${id}`)
+            .then(res =>{
+                const {username} = res.data.user
+                this.setState({username});
+            })
+            .catch( err =>{
+                console.log('get user by id ERROR!!!', err);
+            })
     }
 
     render (){
-        const {shows} = this.state;
+        const {shows, username} = this.state;
 
         return <>
-            <h1>User Profile: shows being watched</h1>
+            <h1>User Profile: shows being watched by {username}</h1>
             <div className='shows-watched-by-user'>
                 {shows.map( (e,i) =>{
                     return <ShowCard {...e} key={i}/>
