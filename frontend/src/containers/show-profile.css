@@ -1,0 +1,12 @@
+.show-profile-display {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.show-profile-txt {
+    text-align: center;
+}
+.show-profile-img {
+    height: 400px;
+    margin-right: 40px;
+}
