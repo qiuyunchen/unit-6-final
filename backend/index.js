@@ -137,6 +137,19 @@ app.get('/comments/show/:id', (req, res) =>{
         })
 })
 
+// Post new comment route
+app.post('/comments', (req, res) =>{
+    const {comment_body, user_id, show_id} = req.body;
+
+    CommentsService.createNewComment({comment_body, user_id: parseInt(user_id), show_id: parseInt(show_id)})
+        .then(newComment =>{
+            res.json({commentCreated: newComment});
+        })
+        .catch( err =>{
+            res.status(404).json({Error: err});
+        })
+})
+
 app.listen(5555, ()=>{
     console.log('Server listening to port 5555');
 })
