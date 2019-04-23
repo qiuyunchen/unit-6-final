@@ -10,6 +10,14 @@ export default class Users extends React.Component{
     }
     
     componentDidMount (){
+        const userLoggedIn = localStorage.getItem('userLoggedIn');
+        if (userLoggedIn){
+            const userObject = JSON.parse(userLoggedIn);
+            this.setState({userLoggedIn: userObject});
+        } else {
+            this.setState({userLoggedIn: null});
+        }
+
         Axios.get('http://localhost:5555/users/all')
             .then(res =>{
                 this.setState({users: res.data.users})
@@ -23,11 +31,16 @@ export default class Users extends React.Component{
         const userid = parseInt(e.target.getAttribute('userid'));
         const {users} = this.state;
         const [theUser] = users.filter(e => e.id === userid);
-        this.setState({userLoggedIn: theUser});
+        this.setState({userLoggedIn: theUser}, ()=>{
+            const value = JSON.stringify(theUser);
+            localStorage.setItem('userLoggedIn', value);
+        });
     }
 
     logout = e =>{
-        this.setState({userLoggedIn: null});
+        this.setState({userLoggedIn: null}, ()=>{
+            localStorage.removeItem('userLoggedIn');
+        });
     }
 
     render(){
@@ -55,14 +68,12 @@ export default class Users extends React.Component{
                 <h1>Master List of all users:</h1>
                 <ol className='users-ol'>
                     {users.map( (e,i) =>{
-                        return <>
-                            <li userid={e.id} onClick={this.signInUser} className='user-name' key={i}>
-                                {e.username} &nbsp;&nbsp;
-                                <Link to={'/user/' + e.id} title={`Go to ${e.username}'s profile`} className='no-deco arrow'> 
-                                    &#9654;
-                                </Link>
-                            </li>
-                        </>
+                        return <li userid={e.id} onClick={this.signInUser} className='user-name' key={i}>
+                            {e.username} &nbsp;&nbsp;
+                            <Link to={'/user/' + e.id} title={`Go to ${e.username}'s profile`} className='no-deco arrow'> 
+                                &#9654;
+                            </Link>
+                        </li>
                     })}
                 </ol>
             </div>

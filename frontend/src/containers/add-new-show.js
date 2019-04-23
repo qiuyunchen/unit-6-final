@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import React from 'react';
+import ShowAddedCard from '../components/show-added-card';
 import './add-new-show.css';
 
 export default class AddNewShow extends React.Component {
@@ -8,11 +9,21 @@ export default class AddNewShow extends React.Component {
         title: '',
         img_url: '',
         genre_id: '',
-        user_id: null,
-        successPost: [],
+        genre_name: '',
+        userLoggedIn: null,
+        successfulPosts: [],
+        error: '',
     }
 
     componentDidMount (){
+        const userLoggedIn = localStorage.getItem('userLoggedIn');
+        if (userLoggedIn){
+            const userObject = JSON.parse(userLoggedIn);
+            this.setState({userLoggedIn: userObject});
+        } else {
+            this.setState({userLoggedIn: null});
+        }
+
         Axios.get('http://localhost:5555/genres/all')
             .then( res =>{
                 const {genres} = res.data;
@@ -21,38 +32,75 @@ export default class AddNewShow extends React.Component {
             .catch( err =>{
                 console.log('get all genres Error!!!...', err);
             })
-
-        console.log(this.props)
     }
 
     handleChange = (e) =>{
-        this.setState({[e.target.name]: e.target.value}, ()=>{
-            console.log(this.state);
-        })
+        this.setState({[e.target.name]: e.target.value});
     }
 
     handleSubmit = (e) =>{
         e.preventDefault();
-        const {title, img_url, genre_id, user_id} = this.state;
-        Axios.post('http://localhost:5555/shows', {
-            title, 
-            img_url, 
-            genre_id, 
-            user_id
-        })
-            .then(success =>{
-                console.log(success);
+        const {title, img_url, genre_id, userLoggedIn, successfulPosts} = this.state;
+
+        if (!userLoggedIn){
+            this.setState({error: 'Hi, you are not logged in, so you cannot add a new show.'});
+        } else {
+            Axios.post('http://localhost:5555/shows', {
+                title, 
+                img_url, 
+                genre_id, 
+                user_id: userLoggedIn.id,
             })
-            .catch(err =>{
-                console.log('post new show Error!!!...', err);
-            })
+                .then(success =>{
+                    const {showCreated} = success.data;
+                    const newPosts = [...successfulPosts];
+                    newPosts.unshift(showCreated);
+                    this.setState({
+                        successfulPosts: newPosts,
+                        title: '',
+                        img_url: '',
+                        genre_id: '',
+                    });
+                })
+                .catch(err =>{
+                    console.log('post new show Error!!!...', err);
+                })
+
+            Axios.get(`http://localhost:5555/genre/${genre_id}`)
+                .then( success =>{
+                    const {genre_name} = success.data.genre;
+                    this.setState({genre_name});
+                })
+                .catch(err =>{
+                    console.log('get genre name request error: ', err);
+                })
+        }
     }
 
     render (){
-        const {genres, title, img_url, genre_id, user_id} = this.state;
+        const {genres, title, img_url, genre_id, genre_name, userLoggedIn, error, successfulPosts} = this.state;
+
+        const userId = userLoggedIn? userLoggedIn.id : '';
+        const username = userLoggedIn? userLoggedIn.username : '';
+
+        const displayGreeting = error
+        ? <div>{error}</div> 
+        : <div>
+            <h1>Hi, {username}</h1>
+            <h1>Add new show to watch...</h1>
+        </div>;
+
+        const showsAdded = successfulPosts.length === 0 ? null :
+            <>
+                {successfulPosts.map( (e,i) =>{
+                    return <ShowAddedCard {...e} genre_name={genre_name} key={i} />
+                })}
+            </>
+
 
         return <>
-            <h1>Add new show to watch...</h1>
+            {displayGreeting}
+
             <form>
                 <div>
                     <input type='text' 
@@ -86,9 +134,14 @@ export default class AddNewShow extends React.Component {
                 </div>
 
                 <button type='submit' className='submit-btn' onClick={this.handleSubmit}>
-                    Post new show for user id: {user_id}
+                    Post new show for user id: {userId}
                 </button>
             </form>
+
+            <h1>Shows Added:</h1>
+            <div className='shows-added-display-area'>
+                {showsAdded}
+            </div>
         </>
     }
 }

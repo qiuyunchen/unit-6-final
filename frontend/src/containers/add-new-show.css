@@ -33,3 +33,7 @@
 .submit-btn:hover {
     cursor: pointer;
 }
+.shows-added-display-area {
+    display: flex;
+    flex-wrap: wrap;
+}

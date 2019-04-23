@@ -13,8 +13,8 @@ export default (props) =>{
     return <li>
         <h2>{title}</h2>
         <p>Who's watching? &nbsp;&nbsp;
-            {watchers.map(e =>{
-                return <span>
+            {watchers.map( (e,i) =>{
+                return <span key={i}>
                     <Link to={`/user/${e.user_id}`} className='watcher-link'>
                         {e.username}
                     </Link> 
