@@ -8,7 +8,7 @@ CommentsService.getCommentById = (id) =>{
         FROM comments
         JOIN users
         ON comments.user_id = users.id
-        WHERE id = $[id];
+        WHERE comments.id = $[id];
     `
     return db.one(sql, {id});
 }
@@ -19,7 +19,7 @@ CommentsService.getCommentsByShowId = (id) =>{
         FROM comments
         JOIN users
         ON comments.user_id = users.id
-        WHERE show_id = $[id];
+        WHERE comments.show_id = $[id];
     `
     return db.any(sql, {id});
 }
