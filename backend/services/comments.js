@@ -4,7 +4,10 @@ module.exports = CommentsService;
 
 CommentsService.getCommentsByShowId = (id) =>{
     const sql =`
-        SELECT * FROM comments
+        SELECT comments.*, users.username
+        FROM comments
+        JOIN users
+        ON comments.user_id = users.id
         WHERE show_id = $[id];
     `
     return db.any(sql, {id});
