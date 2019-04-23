@@ -112,6 +112,18 @@ app.get('/genre/:id', (req, res) =>{
         })
 })
 
+// Get show by id route
+app.get('/shows/:id', (req, res) =>{
+    const {id} = req.params;
+    ShowsService.getShowById(id)
+        .then(show =>{
+            res.json({show});
+        })
+        .catch( err =>{
+            res.status(404).json({Error: err});
+        })
+})
+
 app.listen(5555, ()=>{
     console.log('Server listening to port 5555');
 })
