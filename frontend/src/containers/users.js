@@ -66,6 +66,7 @@ export default class Users extends React.Component{
             <hr></hr>
             <div>
                 <h1>Master List of all users:</h1>
+                <span>Click on user to log in. Click on arrow to go to user profile page.</span>
                 <ol className='users-ol'>
                     {users.map( (e,i) =>{
                         return <li userid={e.id} onClick={this.signInUser} className='user-name' key={i}>
