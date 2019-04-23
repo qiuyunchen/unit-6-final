@@ -150,6 +150,18 @@ app.post('/comments', (req, res) =>{
         })
 })
 
+// Get comment by id route
+app.get('/comments/:id', (req, res) =>{
+    const {id} = req.params;
+    CommentsService.getCommentById(id)
+        .then(comment =>{
+            res.json({comment});
+        })
+        .catch( err =>{
+            res.status(404).json({Error: err});
+        })
+})
+
 app.listen(5555, ()=>{
     console.log('Server listening to port 5555');
 })
