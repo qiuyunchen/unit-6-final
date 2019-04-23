@@ -50,7 +50,7 @@ export default class Users extends React.Component{
             displayLoggedInUser = <>
                 <h1>Welcome, {userLoggedIn.username}!</h1>
                 <h2>Your user id is: {userLoggedIn.id}</h2>
-                <button type='text' onClick={this.logout}>Log Out</button>
+                <button type='text' onClick={this.logout} className='logout-btn'>Log Out</button>
             </>
         } else {
             displayLoggedInUser = <div>

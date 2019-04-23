@@ -18,3 +18,11 @@
 .not-signed-in-text {
     color: grey;
 }
+.logout-btn {
+    font-size: 20pt;
+    padding: 5px 15px;
+    margin-bottom: 20px;
+    border-radius: 15px;
+    background-color: lightblue;
+    color: darkblue;
+}
