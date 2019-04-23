@@ -32,13 +32,14 @@ export default class UserProfile extends React.Component {
     render (){
         const {shows, username} = this.state;
 
-        return <>
-            <h1>User Profile: shows being watched by {username}</h1>
+        return <div className='user-profile'>
+            <h1>{username}'s User Profile</h1>
+            <h2>Shows being watched right now...</h2>
             <div className='shows-watched-by-user'>
                 {shows.map( (e,i) =>{
                     return <ShowCard {...e} key={i}/>
                 })}
             </div>
-        </>;
+        </div>;
     }
 }
