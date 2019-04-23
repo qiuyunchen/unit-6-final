@@ -44,6 +44,8 @@ export default class AddNewShow extends React.Component {
 
         if (!userLoggedIn){
             this.setState({error: 'Hi, you are not logged in, so you cannot add a new show.'});
+        } else if (!title || !img_url || !genre_id) {
+            this.setState({error: 'Please fill out all information por favor...'});
         } else {
             Axios.post('http://localhost:5555/shows', {
                 title, 
@@ -84,7 +86,7 @@ export default class AddNewShow extends React.Component {
         const username = userLoggedIn? userLoggedIn.username : '';
 
         const displayGreeting = error
-        ? <div>{error}</div> 
+        ? <div className='error-msg'>{error}</div> 
         : <div>
             <h1>Hi, {username}</h1>
             <h1>Add new show to watch...</h1>
