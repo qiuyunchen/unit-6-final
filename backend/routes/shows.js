@@ -16,6 +16,17 @@ app.post('/', (req, res) =>{
         })
 })
 
+// Get unique shows route
+app.get('/unique', (req, res) =>{
+    ShowsService.getAllUniqueShowTitles()
+        .then(arr =>{
+            res.json({uniqueShows: arr});
+        })
+        .catch( err =>{
+            res.status(404).json({Error: err});
+        })
+})
+
 // Get show by id route
 app.get('/:id', (req, res) =>{
     const {id} = req.params;
@@ -46,17 +57,6 @@ app.get('/title/:title', (req, res) =>{
     ShowsService.getShowsByTitle(title)
         .then(watchersArr =>{
             res.json({watchers: watchersArr});
-        })
-        .catch( err =>{
-            res.status(404).json({Error: err});
-        })
-})
-
-// Get unique shows route
-app.get('/unique', (req, res) =>{
-    ShowsService.getAllUniqueShowTitles()
-        .then(arr =>{
-            res.json({uniqueShows: arr});
         })
         .catch( err =>{
             res.status(404).json({Error: err});
