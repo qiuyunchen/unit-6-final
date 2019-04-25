@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom';
 import './show-and-watchers.css';
 
 export default (props) =>{
+    const showid = props[0].id;
     const title = props[0].title;
     const watchers = [];
 
@@ -15,7 +16,7 @@ export default (props) =>{
         <p>Who's watching? &nbsp;&nbsp;
             {watchers.map( (e,i) =>{
                 return <span key={i}>
-                    <Link to={`/user/${e.user_id}`} className='watcher-link'>
+                    <Link to={`/show/${showid}`} className='watcher-link'>
                         {e.username}
                     </Link> 
                     <span className='pipe'>
