@@ -68,7 +68,7 @@ export default class AddNewShow extends React.Component {
                     console.log('post new show Error!!!...', err);
                 })
 
-            Axios.get(`http://localhost:5555/genre/${genre_id}`)
+            Axios.get(`http://localhost:5555/genres/${genre_id}`)
                 .then( success =>{
                     const {genre_name} = success.data.genre;
                     this.setState({genre_name});

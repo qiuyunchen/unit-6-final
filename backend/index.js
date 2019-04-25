@@ -2,11 +2,11 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
 
-// Service Module Requirements
-const UserService = require('./services/user');
-const ShowsService = require('./services/shows');
-const GenreService = require('./services/genre');
-const CommentsService = require('./services/comments');
+// Router Requirements
+const commentsRouter = require('./routes/comments');
+const genresRouter = require('./routes/genres');
+const showsRouter = require('./routes/shows');
+const usersRouter = require('./routes/users');
 
 const app = express();
 
@@ -19,148 +19,10 @@ app.get('/', (req, res) =>{
     res.json({success: 'connected', url: 'localhost:5555/'});
 })
 
-// Get All Users Route
-app.get('/users/all', (req,res) =>{
-    UserService.getAllUsers()
-        .then(usersArr =>{
-            res.json({users: usersArr});
-        })
-        .catch( err =>{
-            res.status(404).json({Error: err});
-        })
-})
-
-// Get user by id
-app.get('/users/:id', (req, res) =>{
-    const {id} = req.params;
-    UserService.getUserById(id)
-        .then(user =>{
-            res.json({user});
-        })
-        .catch( err =>{
-            res.status(404).json({Error: err});
-        })
-})
-
-// Shows For One User Route
-app.get('/shows/user/:id', (req, res) =>{
-    const {id} = req.params;
-    ShowsService.getShowsByUserId( parseInt(id) )
-        .then(showsArr =>{
-            res.json({shows: showsArr});
-        })
-        .catch( err =>{
-            res.status(404).json({Error: err});
-        })
-})
-
-// Get Unique Shows Route
-app.get('/shows/unique', (req, res) =>{
-    ShowsService.getAllUniqueShowTitles()
-        .then(arr =>{
-            res.json({uniqueShows: arr});
-        })
-        .catch( err =>{
-            res.status(404).json({Error: err});
-        })
-})
-
-// Get Shows By Title Route
-app.get('/shows/title/:title', (req, res) =>{
-    const {title} = req.params;
-    ShowsService.getShowsByTitle(title)
-        .then(watchersArr =>{
-            res.json({watchers: watchersArr});
-        })
-        .catch( err =>{
-            res.status(404).json({Error: err});
-        })
-})
-
-// Get all genres Route
-app.get('/genres/all', (req, res) =>{
-    GenreService.getAllGenres()
-        .then(genresArr =>{
-            res.json({genres: genresArr});
-        })
-        .catch( err =>{
-            res.status(404).json({Error: err});
-        })
-})
-
-// Post new show route
-app.post('/shows', (req, res) =>{
-    const {title, img_url, user_id, genre_id} = req.body;
-
-    ShowsService.createNewShow({title, img_url, user_id: parseInt(user_id), genre_id: parseInt(genre_id)})
-        .then(newShow =>{
-            res.json({showCreated: newShow});
-        })
-        .catch( err =>{
-            res.status(404).json({Error: err});
-        })
-})
-
-// Get genre by id route
-app.get('/genre/:id', (req, res) =>{
-    const {id} = req.params;
-    GenreService.getGenreById(id)
-        .then(genre =>{
-            res.json({genre});
-        })
-        .catch( err =>{
-            res.status(404).json({Error: err});
-        })
-})
-
-// Get show by id route
-app.get('/shows/:id', (req, res) =>{
-    const {id} = req.params;
-    ShowsService.getShowById(id)
-        .then(show =>{
-            res.json({show});
-        })
-        .catch( err =>{
-            res.status(404).json({Error: err});
-        })
-})
-
-// Get comments by show id route
-app.get('/comments/show/:id', (req, res) =>{
-    const {id} = req.params;
-    CommentsService.getCommentsByShowId(id)
-        .then(comments =>{
-            res.json({comments});
-        })
-        .catch( err =>{
-            res.status(404).json({Error: err});
-        })
-})
-
-// Post new comment route
-app.post('/comments', (req, res) =>{
-    const {comment_body, user_id, show_id} = req.body;
-
-    CommentsService.createNewComment({comment_body, user_id: parseInt(user_id), show_id: parseInt(show_id)})
-        .then(newComment =>{
-            res.json({commentCreated: newComment});
-        })
-        .catch( err =>{
-            res.status(404).json({Error: err});
-        })
-})
-
-// Get comment by id route
-app.get('/comments/:id', (req, res) =>{
-    const {id} = req.params;
-    CommentsService.getCommentById(id)
-        .then(comment =>{
-            res.json({comment});
-        })
-        .catch( err =>{
-            res.status(404).json({Error: err});
-        })
-})
+app.use('/comments', commentsRouter);
+app.use('/genres', genresRouter);
+app.use('/shows', showsRouter);
+app.use('/users', usersRouter);
 
 app.listen(5555, ()=>{
     console.log('Server listening to port 5555');
